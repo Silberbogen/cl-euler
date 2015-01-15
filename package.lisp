@@ -87,6 +87,7 @@
 		   #:problem-61
 		   #:problem-62
 		   #:problem-63
+           #:problem-64
 		   #:problem-66
 		   #:problem-67
 		   #:problem-68

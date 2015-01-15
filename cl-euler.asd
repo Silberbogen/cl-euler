@@ -26,6 +26,7 @@
   :depends-on (#:cl-hilfsroutinen)
   :components ((:static-file "LICENSE")
 			   (:file "package")
-               (:file "cl-euler")))
+               (:file "cl-euler")
+               (:file "test" :depends-on ("cl-euler"))))
 
 

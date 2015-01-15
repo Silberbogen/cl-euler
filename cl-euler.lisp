@@ -1,6 +1,6 @@
 ;;;; -*- mode: lisp -*-
 ;;;; -*- coding: utf-8 -*-
-;;;; Dateiname: euler.lisp
+;;;; Dateiname: cl-euler.lisp
 ;;;; Beschreibung: Lösungen diverser Aufgaben von Projekt Euler
 ;;;; ------------------------------------------------------------------------
 ;;;; Author: Sascha K. Biermanns, <skkd punkt h4k1n9 at yahoo punkt de>
@@ -427,7 +427,7 @@
 
 
 (defun problem-24 ()
-  (permutations-rang 1000000 '(0 1 2 3 4 5 6 7 8 9)))
+  (liste->zahl (permutations-rang 1000000 '(0 1 2 3 4 5 6 7 8 9))))
 
 
 (defun problem-25 ()
@@ -915,10 +915,13 @@
 
 
 (defun problem-55 ()
-  (let ((anzahl 0))
-	(dotimes (i 10000 anzahl)
-	  (when (lychrel-zahl-p i)
-		(incf anzahl)))))
+  (loop for i from 1 to 10000
+     when (lychrel-zahl-p i)
+       count i))
+;  (let ((anzahl 0))
+;	(dotimes (i 10000 anzahl)
+;	  (when (lychrel-zahl-p i)
+;		(incf anzahl)))))
 
 
 (defun problem-56 ()
@@ -975,7 +978,7 @@
 										 (incf summe d)
 										 (write-char (code-char d) sstr))))))
 			   (if (and (search " the " entschlüsselt) (search ". " entschlüsselt))
-				   (list summe entschlüsselt)
+				   (values summe entschlüsselt)
 				   nil)))
 		   (entschlüssle-alles ()
 			 (let ((crypto-text (erstelle-zahlenliste "Euler/p059_cipher.txt")))
@@ -1089,6 +1092,25 @@
 			   (when (= j (length (zahl->liste (expt i j))))
 				 (incf anzahl))))))
 	(finde-anzahl)))
+
+
+(defun problem-64 (&optional (limit 10000))
+  (flet ((finde-ungerade-periode (x)
+           (let* ((a (isqrt x)))
+             (when (= (expt a 2) x)
+               (return-from finde-ungerade-periode 'nil))
+             (let ((a0 a)
+                   (m 0)
+                   (d 1)
+                   (n nil))
+               (while (/= a (* a0 2))
+                 (setf n (not n))
+                 (setf m (- (* d a) m))
+                 (setf d (truncate (/ (- x (expt m 2)) d)))
+                 (setf a (truncate (/ (+ a0 m) d))))
+               n))))
+    (loop for i from 2 to limit
+       count (finde-ungerade-periode i))))
 
 
 (defun problem-66 (&optional (limit 1000))
