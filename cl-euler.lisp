@@ -219,7 +219,7 @@
 (defun problem-12 ()
   (loop for i upfrom 1
      for n = (dreieckszahl i)
-     when (> (length (divisoren n)) 500)
+     when (> (length (teiler n)) 500)
      do (return-from problem-12 n)))
 
 
