@@ -345,7 +345,7 @@
 
 
 (defun problem-16 ()
-  (addiere-ziffern (expt 2 1000)))
+  (quersumme (expt 2 1000)))
 
 
 (defun problem-17 ()
@@ -386,7 +386,7 @@
 
 
 (defun problem-20 ()
-  (addiere-ziffern (faktor 100)))
+  (quersumme (faktor 100)))
 
 
 (defun problem-21 (&optional (max 10000))
@@ -1111,6 +1111,20 @@
                n))))
     (loop for i from 2 to limit
        count (finde-ungerade-periode i))))
+
+
+(defun problem-65 (&optional (limit 100))
+  (labels ((annäherung-an-e (von bis)
+             (cond ((= von bis)
+                    0)
+                   ((zerop von)
+                    (+ 2 (annäherung-an-e (+ 1 von) bis)))
+                   ((= 2 (mod von 3))
+                    (/ 1 (+ (* 2 (/ (+ 1 von) 3))
+                            (annäherung-an-e (+ 1 von) bis))))
+                   (t
+                    (/ 1 (+ 1 (annäherung-an-e (+ 1 von) bis)))))))
+    (quersumme (numerator (annäherung-an-e 0 limit)))))
 
 
 (defun problem-66 (&optional (limit 1000))

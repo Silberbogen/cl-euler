@@ -95,7 +95,7 @@
   (test #'problem-62 127035954683)
   (test #'problem-63 49)
   (test #'problem-64 1322)
-  
+  (test #'problem-65 272)
   (test #'problem-66 661)
   (test #'problem-67 7273)
   (test #'problem-68 6531031914842725)
