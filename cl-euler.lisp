@@ -3,9 +3,9 @@
 ;;;; Dateiname: euler.lisp
 ;;;; Beschreibung: Lösungen diverser Aufgaben von Projekt Euler
 ;;;; ------------------------------------------------------------------------
-;;;; Author: Sascha Biermanns, <skkd punkt h4k1n9 at yahoo punkt de>
+;;;; Author: Sascha K. Biermanns, <skkd punkt h4k1n9 at yahoo punkt de>
 ;;;; Lizenz: ISC
-;;;; Copyright (C) 2011-2015 Sascha Biermanns
+;;;; Copyright (C) 2011-2015 Sascha K. Biermanns
 ;;;; Permission to use, copy, modify, and/or distribute this software for any
 ;;;; purpose with or without fee is hereby granted, provided that the above
 ;;;; copyright notice and this permission notice appear in all copies.
@@ -19,8 +19,9 @@
 ;;;; ------------------------------------------------------------------------
 
 
-;(in-package #:cl-euler)
-;(use-package :cl-hilfsroutinen)
+(in-package #:cl-euler)
+(use-package :cl-hilfsroutinen)
+
 
 ;;; -----------------------------------------------------------
 ;;; Aufgaben übergreifende Routinen, die sinnlos sind im Alltag
@@ -114,7 +115,7 @@
 
 
 (defun problem-7 ()
-  (primzahl-rang 10001))
+  (primzahl 10001))
 
 
 (defun problem-8 (&optional (limit 13))

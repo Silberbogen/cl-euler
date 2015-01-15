@@ -2,9 +2,9 @@
 ;;;; -*- coding: utf-8 -*-
 ;;;; Dateiname: packages.lisp
 ;;;; ------------------------------------------------------------------------
-;;;; Author: Sascha Biermanns, <skkd.h4k1n9@yahoo.de>
+;;;; Author: Sascha K. Biermanns, <skkd punkt h4k1n9 at yahoo punkt de>
 ;;;; Lizenz: ISC
-;;;; Copyright (C) 2011-2014 Sascha Biermanns
+;;;; Copyright (C) 2011-2015 Sascha K. Biermanns
 ;;;; Permission to use, copy, modify, and/or distribute this software for any
 ;;;; purpose with or without fee is hereby granted, provided that the above
 ;;;; copyright notice and this permission notice appear in all copies.
@@ -17,11 +17,13 @@
 ;;;; OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ;;;; ------------------------------------------------------------------------
 
+
 (require :cl-hilfsroutinen)
+
 
 (defpackage #:cl-euler
   (:nicknames :euler)
-  (:use #:cl)
+  (:use #:cl #:cl-hilfsroutinen)
   (:export #:problem-1
 		   #:problem-2
 		   #:problem-3
