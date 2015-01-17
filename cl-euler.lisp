@@ -1716,15 +1716,12 @@
 
 (defun problem-211 (&optional (max 64000000))
   (let ((sieb (make-array (+ max 1) :initial-element 1)))
-	;; Fülle das Sieb ...
-	(loop for i from 2 to max do
-		 (let ((wert (expt i 2)))
-		   (loop for j from i to max by i do
-				(incf (svref sieb j) wert))))
-	;; ... finde die gesuchten Zahlen, summiere sie ...
-	(loop for i from 1 to max
-	   when (quadratzahlp (svref sieb i))
-	   sum i)))
+	(1+ (loop for i from 2 to max
+           for wert = (expt i 2)
+           do (loop for j from i to max by i
+                 do (incf (svref sieb j) wert))
+           when (quadratzahlp (svref sieb i))
+           sum i))))
 
 
 (defun problem-243 (&optional (r 15499/94744))
@@ -1738,5 +1735,4 @@
 			   (when (< (/ (* s i) (1- (* d i))) r)
 				 (return-from finde-d (* d i)))))))
 	(finde-d r)))
-
 
