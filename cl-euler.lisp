@@ -905,14 +905,15 @@
 		   (erstelle-kartenliste (stream-name)
 			 "Einleseformat: 10 durch Leerzeichen getrennte Daten je Zeile"
 			 (let (kartenliste)
-			   (with-open-file (stream stream-name)
+			   (with-input-from-string (stream stream-name)
 				 (do ((i (read-line stream nil)
 						 (read-line stream nil)))
 					 ((null i)
 					  (reverse kartenliste))
 				   (push (string-aufteilen i) kartenliste))))))
 	;; ---------- ENDE der Unterprogramme ----------------------------------------
-	(let ((kartenliste (erstelle-kartenliste "Euler/p054_poker.txt")))
+	(let* ((datei (drakma:http-request "https://projecteuler.net/project/resources/p054_poker.txt"))
+          (kartenliste (erstelle-kartenliste datei)))
 	  (loop for blatt-paar in kartenliste
 		 when (blatt< (nthcdr 5 blatt-paar) (butlast blatt-paar 5))
 		 sum 1))))
