@@ -19,11 +19,11 @@
 
 
 (require :cl-hilfsroutinen)
-
+(require :drakma)
 
 (defpackage #:cl-euler
   (:nicknames :euler)
-  (:use #:cl #:cl-hilfsroutinen)
+  (:use #:cl #:cl-hilfsroutinen #:drakma)
   (:export #:problem-1
 		   #:problem-2
 		   #:problem-3

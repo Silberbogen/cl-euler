@@ -23,7 +23,7 @@
   :author "Sascha Biermanns <skkd.h4k1n9@yahoo.de>"
   :license "ISC"
   :serial t
-  :depends-on (#:cl-hilfsroutinen)
+  :depends-on (#:cl-hilfsroutinen #:drakma)
   :components ((:static-file "LICENSE")
 			   (:file "package")
                (:file "cl-euler")

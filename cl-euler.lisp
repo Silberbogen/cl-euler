@@ -21,6 +21,7 @@
 
 (in-package #:cl-euler)
 (use-package :cl-hilfsroutinen)
+(use-package :drakma)
 
 
 ;;; -----------------------------------------------------------
@@ -47,7 +48,8 @@
 (defun erstelle-wortliste (stream-name)
   "Einleseformat: TextKommaTextKommaText ohne Leerzeichen"
   (let ((wortliste nil))
-	(with-open-file (stream stream-name)
+                                        ;	(with-open-file (stream stream-name)
+    (with-input-from-string (stream stream-name)
 	  (do ((i (read stream nil)
 			  (read stream nil)))
 		  ((null i)
@@ -398,7 +400,8 @@
 
 
 (defun problem-22 ()
-  (let ((namensliste (erstelle-wortliste "Euler/p022_names.txt")))
+  (let* ((datei (drakma:http-request "https://projecteuler.net/project/resources/p022_names.txt")) 
+         (namensliste (erstelle-wortliste datei)))
     (loop for i from 1 to (length namensliste)
        sum (* i (alphabetischer-wert (pop namensliste))))))
 
@@ -612,7 +615,8 @@
 
 
 (defun problem-42 ()
-  (let* ((wortliste (erstelle-wortliste "Euler/p042_words.txt"))
+  (let* ((datei (drakma:http-request "https://projecteuler.net/project/resources/p042_words.txt"))
+         (wortliste (erstelle-wortliste datei))
 		 (länge (length wortliste)))
 	(do ((i 1 (1+ i))
 		 (anzahl 0))
@@ -918,10 +922,6 @@
   (loop for i from 1 to 10000
      when (lychrel-zahl-p i)
        count i))
-;  (let ((anzahl 0))
-;	(dotimes (i 10000 anzahl)
-;	  (when (lychrel-zahl-p i)
-;		(incf anzahl)))))
 
 
 (defun problem-56 ()
