@@ -1383,7 +1383,7 @@
 		   (let ((matrix (make-array (list zeilen spalten)))
 				 (*readtable* (copy-readtable)))
 			 (set-syntax-from-char #\, #\Space)
-			 (with-open-file (stream dateiname)
+			 (with-input-from-string (stream dateiname)
 			   (do ((i 0 (1+ i)))
 				   ((>= i 80)
 					matrix)
@@ -1410,7 +1410,8 @@
 		 (berechne-minimale-kosten (zeilen spalten dateiname)
 		   (let ((matrix (read-matrix zeilen spalten dateiname)))
 			 (aref (filtere-kosten zeilen spalten matrix) (1- zeilen) (1- spalten)))))
-	(berechne-minimale-kosten 80 80 "Euler/p081_matrix.txt")))
+	(let ((datei (drakma:http-request "https://projecteuler.net/project/resources/p081_matrix.txt")))
+     (berechne-minimale-kosten 80 80 datei))))
 
 
 (defun problem-84 ()
