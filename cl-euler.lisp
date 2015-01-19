@@ -1651,21 +1651,22 @@
   (mod (1+ (* 28433 (expt 2 7830457))) (expt 10 10)))
 
 
-(defun problem-99 (&optional (stream-name "Euler/p099_base_exp.txt"))
-  (with-open-file (stream stream-name)
-	(let ((max-zahl 1)
-		  (richtige-zeile))
-	  (do ((i (read-line stream nil)
-			  (read-line stream nil))
-		   (zeile 1 (1+ zeile)))
-		  ((null i)
-		   richtige-zeile)
-		(let* ((basis (parse-integer (subseq i 0 (position #\, i))))
-			   (exponent (parse-integer (subseq i (1+ (position #\, i)))))
-			   (zahl (* (log basis) exponent)))
-		  (when (> zahl max-zahl)
-			(setf max-zahl zahl
-				  richtige-zeile zeile)))))))
+(defun problem-99 ()
+  (let ((datei (drakma:http-request "https://projecteuler.net/project/resources/p099_base_exp.txt")))
+    (with-input-from-string (stream datei)
+      (let ((max-zahl 1)
+            (richtige-zeile))
+        (do ((i (read-line stream nil)
+                (read-line stream nil))
+             (zeile 1 (1+ zeile)))
+            ((null i)
+             richtige-zeile)
+          (let* ((basis (parse-integer (subseq i 0 (position #\, i))))
+                 (exponent (parse-integer (subseq i (1+ (position #\, i)))))
+                 (zahl (* (log basis) exponent)))
+            (when (> zahl max-zahl)
+              (setf max-zahl zahl
+                    richtige-zeile zeile))))))))
 
 
 (defun problem-102 (&optional (stream-name "Euler/p102_triangles.txt"))
