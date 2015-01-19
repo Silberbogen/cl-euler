@@ -61,7 +61,7 @@
 (defun erstelle-zahlenliste (stream-name)
   "Einleseformat: ZahlKommaZahlKommaZahl ohne Leerzeichen"
   (let ((zahlenliste nil))
-	(with-open-file (stream stream-name)
+	(with-input-from-string (stream stream-name)
 	  (do ((i (read stream nil)
 			  (read stream nil)))
 		  ((null i)
@@ -982,7 +982,8 @@
 				   (values summe entschlüsselt)
 				   nil)))
 		   (entschlüssle-alles ()
-			 (let ((crypto-text (erstelle-zahlenliste "Euler/p059_cipher.txt")))
+			 (let* ((datei (drakma:http-request "https://projecteuler.net/project/resources/p059_cipher.txt"))
+                    (crypto-text (erstelle-zahlenliste datei)))
 			   (do ((i 97 (1+ i)))
 				   ((> i 122))
 				 (do ((j 97 (1+ j)))
