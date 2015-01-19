@@ -1622,7 +1622,7 @@
 		   (erstelle-sudokuliste (stream-name)
 			 "Einleseformat: 1.Zeile: Sudokuname, 2.-10. Zeile je 9 Ziffern pro Zeile"
 			 (let (sudokuliste)
-			   (with-open-file (stream stream-name)
+			   (with-input-from-string (stream stream-name)
 				 (dotimes (i 50 (nreverse sudokuliste))
 				   (read-line stream nil)
 				   (let ((sudoku (make-array '(9 9))))
@@ -1633,7 +1633,8 @@
 					 (push sudoku sudokuliste))))))
 		   (löse-sudokuliste ()
 			 "Löst alles Sudokus"
-			 (let ((sudoku-liste (erstelle-sudokuliste "Euler/p096_sudoku.txt"))
+			 (let* ((datei (drakma:http-request "https://projecteuler.net/project/resources/p096_sudoku.txt"))
+                    (sudoku-liste (erstelle-sudokuliste datei))
 				   gelöste-sudoku)
 			   (dolist (sudoku sudoku-liste (nreverse gelöste-sudoku))
 				 (push (löse-sudoku sudoku) gelöste-sudoku))))
