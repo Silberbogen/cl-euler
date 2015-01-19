@@ -1158,13 +1158,14 @@
 (defun problem-67 ()
   (flet ((erstelle-zahlenpyramide (stream-name)
 		   (let (zahlenliste)
-			 (with-open-file (stream stream-name)
+			 (with-input-from-string (stream stream-name)
 			   (do ((i (read-line stream nil)
 					   (read-line stream nil)))
 				   ((null i)
 					zahlenliste)
 				 (push (mapcar #'parse-integer (string-aufteilen i))  zahlenliste))))))
-	(first (route-dreieck (erstelle-zahlenpyramide "Euler/p067_triangle.txt")))))
+    (let ((datei (drakma:http-request "https://projecteuler.net/project/resources/p067_triangle.txt")))
+      (first (route-dreieck (erstelle-zahlenpyramide datei))))))
 
 
 (defun problem-68 ()
