@@ -23,7 +23,7 @@
 (asdf:defsystem #:cl-euler
   :description "Routinen, die mich bei diversen Aufgaben unterstützen"
   :author "Sascha Biermanns <skkd.h4k1n9@yahoo.de>"
-  :license "ISC"
+  :license "GPL v3"
   :serial t
   :depends-on (#:cl-hilfsroutinen #:drakma)
   :components ((:static-file "LICENSE")
