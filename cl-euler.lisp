@@ -994,7 +994,8 @@
 					   ((> k 122))
 					 (let ((pd (mögliche-entschlüsselung i j k crypto-text)))
 					   (when pd
-						 (format t "~a~%" pd)))))))))
+;;						 (format t "~a~%" pd)
+						 (return-from entschlüssle-alles pd)))))))))
 	(entschlüssle-alles)))
 
 

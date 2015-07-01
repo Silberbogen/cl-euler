@@ -32,7 +32,7 @@
         (format t "... bestätigt~%")
         (cerror "~&FEHLER in ~A:  ~A statt ~A~%" fn ergebnis wert))))
 
-(defun teste-1-54 ()
+(defun teste-alles ()
   (test #'problem-1 233168)
   (test #'problem-2 4613732)
   (test #'problem-3 6857)
@@ -88,11 +88,7 @@
   (test #'problem-53 4075)
   (test #'problem-54 376)
   (lösche-alle-memos)
-  (format t "~&Alle Tests durchgeführt.~%"))
-
-
-(defun teste-55-250 ()
-  (test #'problem-55 249)
+;;  (test #'problem-55 249)
   (test #'problem-56 972)
   (test #'problem-57 153)
   (test #'problem-58 26241)
@@ -105,7 +101,7 @@
   (test #'problem-65 272)
   (test #'problem-66 661)
   (test #'problem-67 7273)
-  (test #'problem-68 6531031914842725)
+;;  (test #'problem-68 6531031914842725)
   (test #'problem-69 510510)
   (test #'problem-70 8319823)
   (test #'problem-71 428570)
@@ -115,18 +111,19 @@
   (test #'problem-75 161667)
   (test #'problem-76 190569291)
   (test #'problem-77 71)
+  (lösche-alle-memos)
   
   (test #'problem-79 73162890)
 
   (test #'problem-81 427337)
   
-  (test #'problem-84 101524)
+;;  (test #'problem-84 101524)
   
   (test #'problem-89 743)
 
   (test #'problem-92 8581146)
   
-  (test #'problem-95 14316)
+;;  (test #'problem-95 14316)
   (test #'problem-96 24702)
   (test #'problem-97 8739992577)
 
