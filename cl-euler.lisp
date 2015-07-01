@@ -223,7 +223,7 @@
 (defun problem-12 ()
   (loop for i upfrom 1
      for n = (dreieckszahl i)
-     when (> (length (teiler n)) 500)
+     when (> (length (divisoren n)) 500)
      do (return-from problem-12 n)))
 
 
@@ -432,12 +432,12 @@
 
 
 (defun problem-24 ()
-  (liste->zahl (permutations-rang 1000000 '(0 1 2 3 4 5 6 7 8 9))))
+  (ziffern->zahl (permutations-rang 1000000 '(0 1 2 3 4 5 6 7 8 9))))
 
 
 (defun problem-25 ()
   (loop for i upfrom 1
-     when (= (length (zahl->liste (fibonacci i))) 1000)
+     when (= (length (zahl->ziffern (fibonacci i))) 1000)
      return i))
 
 
@@ -528,9 +528,9 @@
               do (loop for j from 100 below 10000
                     for produkt = (* i j)
                     if (and (< produkt 9999)
-                            (pandigitalp (append (zahl->liste i)
-                                                 (zahl->liste j)
-                                                 (zahl->liste produkt))))
+                            (pandigitalp (append (zahl->ziffern i)
+                                                 (zahl->ziffern j)
+                                                 (zahl->ziffern produkt))))
                     do (pushnew produkt liste))
               finally (return liste))))
 	(reduce #'+ (alle-pandigitalen-produkte))))
@@ -553,7 +553,7 @@
 
 (defun problem-34 (&optional (max (* (faktor 9) 7)))
   (loop for i from 3 to max
-     when (= i (reduce #'+ (mapcar #'faktor (zahl->liste i))))
+     when (= i (reduce #'+ (mapcar #'faktor (zahl->ziffern i))))
 		sum i))
 
 
@@ -581,7 +581,7 @@
 
 (defun problem-38 ()
   (loop for i downfrom 9999
-     if (pandigitalp (append (zahl->liste i) (zahl->liste (* 2 i))))
+     if (pandigitalp (append (zahl->ziffern i) (zahl->ziffern (* 2 i))))
      do (return (parse-integer (format nil "~a~a" i (* 2 i))))))
 
 
@@ -606,7 +606,7 @@
 
 
 (defun problem-40 ()
-  (let ((digits (loop for i from 0 to 200000 append (zahl->liste i))))
+  (let ((digits (loop for i from 0 to 200000 append (zahl->ziffern i))))
 	(apply #'* (mapcar #'(lambda (n) (nth n digits)) '(1 10 100 1000 10000 100000 1000000)))))
 
 
@@ -630,7 +630,7 @@
 
 (defun problem-43 ()
   (flet ((teile-p (n lst)
-		   (zerop (mod (liste->zahl lst) n))))
+		   (zerop (mod (ziffern->zahl lst) n))))
 	(let ((liste '(0 1 2 3 4 5 6 7 8 9))
 		  (summe 0))
 	  ;; Durchlaufe für jede Ziffer eine separat abgestimmte Liste
@@ -652,7 +652,7 @@
 									 (teile-p 11 (list d6 d7 d8))
 									 (teile-p 13 (list d7 d8 d9))
 									 (teile-p 17 (list d8 d9 d10)))
-							(incf summe (liste->zahl (list d1 d2 d3 d4 d5 d6 d7 d8 d9 d10)))))))))))))))))
+							(incf summe (ziffern->zahl (list d1 d2 d3 d4 d5 d6 d7 d8 d9 d10)))))))))))))))))
 
 		
 (defun problem-44 ()
@@ -715,7 +715,7 @@
 
 
 (defun problem-48 ()
-  (liste->zahl (last (zahl->liste (loop for i from 1 to 1000
+  (ziffern->zahl (last (zahl->ziffern (loop for i from 1 to 1000
                         sum (expt i i)))
                      10)))
 
@@ -725,24 +725,24 @@
      for i2 = (+ i 3330)
      for i3 = (+ i 6660)
      when (and (primzahlp i) (primzahlp i2) (primzahlp i3))
-       do (let ((l1 (remove-duplicates (zahl->liste i)))
-             (l2 (remove-duplicates (zahl->liste i2)))
-             (l3 (remove-duplicates (zahl->liste i3))))
+       do (let ((l1 (remove-duplicates (zahl->ziffern i)))
+             (l2 (remove-duplicates (zahl->ziffern i2)))
+             (l3 (remove-duplicates (zahl->ziffern i3))))
          (when (and (subsetp l1 l2) (subsetp l1 l3) (subsetp l2 l1) (subsetp l3 l1))
            (return (parse-integer (format nil "~a~a~a" i (+ i 3330) (+ i 6660))))))))
 
 
 (defun problem-50 ()
   (let ((max-zahl 0)
-		(max-anzahl 0)
-		(obergrenze (second (summe-fortlaufender-primzahlen 1 1000000))))
-	(dolist (i (sieb-des-eratosthenes (1- obergrenze)) max-zahl)
-	  (let* ((werte (summe-fortlaufender-primzahlen i 1000000))
-			 (zahl (first werte))
-			 (anzahl (second werte)))
-		(when (and (> anzahl max-anzahl) (> zahl max-zahl) (primzahlp zahl))
-		  (setf max-zahl zahl)
-		  (setf max-anzahl anzahl))))))
+		(max-anzahl 0))
+	(multiple-value-bind (summe obergrenze) (summe-fortlaufender-primzahlen 1 1000000)
+	  (dolist (i (sieb-des-eratosthenes (1- obergrenze)) max-zahl)
+		(multiple-value-bind (zahl anzahl) (summe-fortlaufender-primzahlen i 1000000)
+		  (when (and (> anzahl max-anzahl)
+					 (> zahl max-zahl)
+					 (primzahlp zahl))
+			(setf max-zahl zahl
+				  max-anzahl anzahl)))))))
 
 
 (defun problem-51 ()
@@ -750,7 +750,7 @@
 		(anzahl-primzahlen 8))
 	(flet ((teste (i j)
 			 (let ((anzahl 0))
-			   (do ((k (if (= j (first (zahl->liste i))) 1 0) (1+ k)))
+			   (do ((k (if (= j (first (zahl->ziffern i))) 1 0) (1+ k)))
 				   ((> k 9))
 				 (if (member (tausche-ziffer i j k) kandidaten)
 					 (incf anzahl))
@@ -759,7 +759,7 @@
 				 (if (< (+ anzahl (- 9 k)) anzahl-primzahlen)
 					 (return nil))))))
 	  (dolist (i kandidaten)
-		(dolist (j (zahl->liste i))
+		(dolist (j (zahl->ziffern i))
 		  (if (teste i j)
 			  (return-from problem-51 i)))))))
 
@@ -949,8 +949,8 @@
 		   (zähle-treffer (brüche)
 			 (let ((anzahl 0))
 			   (dolist (bruch brüche anzahl)
-				 (when (> (length (zahl->liste (numerator bruch)))
-						  (length (zahl->liste (denominator bruch))))
+				 (when (> (length (zahl->ziffern (numerator bruch)))
+						  (length (zahl->ziffern (denominator bruch))))
 				   (incf anzahl))))))
 	(zähle-treffer (expansions-schleife 1000))))
 
@@ -1093,7 +1093,7 @@
 				anzahl)
 			 (do ((j 1 (1+ j)))
 				 ((> j 100))
-			   (when (= j (length (zahl->liste (expt i j))))
+			   (when (= j (length (zahl->ziffern (expt i j))))
 				 (incf anzahl))))))
 	(finde-anzahl)))
 
@@ -1213,7 +1213,7 @@
         (ratio 3.0)
 		(primzahlen (sieb-des-eratosthenes limit)))
 	(labels ((ist-permutation-p (a b)
-			   (equal (sort (zahl->liste a) #'<) (sort (zahl->liste b) #'<)))
+			   (equal (sort (zahl->ziffern a) #'<) (sort (zahl->ziffern b) #'<)))
 			 (finde-ratio (limit)
 			   (loop for a in primzahlen
 				  do (loop for b in primzahlen
@@ -1259,7 +1259,7 @@
 				   ((= i l))
 				 (setf (gethash (elt liste i) kette 0) (+ (- l i) zusatz))))
 			 (faktor-ziffer-summe (n)
-			   (reduce #'+ (mapcar #'faktor (zahl->liste n))))
+			   (reduce #'+ (mapcar #'faktor (zahl->ziffern n))))
 			 (ziffer-faktoren-kette (n &optional liste)
 			   (when (member n liste)
 				 (speichere-längen (reverse liste))
@@ -1369,12 +1369,12 @@
 			   (when (teste-ziffer-p i liste)
 				 (return i)))))
 	(let* ((datei (drakma:http-request "https://projecteuler.net/project/resources/p079_keylog.txt"))
-           (keylog (mapcar #'zahl->liste (erstelle-keylogliste datei)))
+           (keylog (mapcar #'zahl->ziffern (erstelle-keylogliste datei)))
 		  (kandidaten '(1 2 3 4 5 6 7 8 9 0)))
 	  (do ((i 1 (1+ i))
            lösung)
 		  ((> i 10)
-		   (liste->zahl (delete nil (reverse lösung))))
+		   (ziffern->zahl (delete nil (reverse lösung))))
 		(push (suche-ziffer kandidaten keylog) lösung)
 		(setf kandidaten (delete (first lösung) kandidaten))
 		(setf keylog (entferne-ziffer (first lösung) keylog))))))
@@ -1526,7 +1526,7 @@
 					89)
 				   (t
 					(prüfe-zahl (reduce #'+ (mapcar #'(lambda (x) (expt x 2))
-													(zahl->liste zahl)))))))
+													(zahl->ziffern zahl)))))))
 		   (zähle-quadrat-ziffern-ketten (limit)
 			 (let ((anzahl 0))
 			   (do ((i 1 (1+ i)))
