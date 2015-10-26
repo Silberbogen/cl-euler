@@ -934,7 +934,7 @@
 	   maximum)
 	(do ((b 1 (1+ b)))
 		((>= b 100))
-	  (let ((wert (ziffer-summe (expt a b))))
+	  (let ((wert (addiere-ziffern (expt a b))))
 		(when (> wert maximum)
 		  (setf maximum wert))))))
 
