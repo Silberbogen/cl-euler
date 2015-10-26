@@ -1726,6 +1726,29 @@
 	(finde-summe 100000000)))
 
 
+(defun problem-144 ()
+  (do ((result 1 (1+ result))
+	   (xa 0.0)
+	   (ya 10.1)
+	   (x0 1.4)
+	   (y0 -9.6))
+	  ((and (<= x0 0.01) (>= x0 -0.01) (>= y0 0))
+	   result)
+	(let* ((slopea (/ (- y0 ya) (- x0 xa)))
+		   (slope0 (/ (* -4 x0) y0))
+		   (tana (/ (- slopea slope0) (1+ (* slopea slope0))))
+		   (slopeb (/ (- slope0 tana) (1+ (* tana slope0))))
+		   (interceptb (- y0 (* slopeb x0)))
+		   (a (+ 4 (expt slopeb 2)))
+		   (b (* 2 slopeb interceptb))
+		   (c (- (expt interceptb 2) 100))
+		   (ans1 (/ (+ (- 0 b) (sqrt (- (expt b 2) (* 4 a c)))) (* 2 a)))
+		   (ans2 (/ (- 0 b (sqrt (- (expt b 2) (* 4 a c)))) (* 2 a))))
+	  (setf xa x0
+			ya y0
+			x0 (if (> (abs (- ans1 x0)) (abs (- ans2 x0))) ans1 ans2)
+			y0 (+ (* slopeb x0) interceptb)))))
+
 (defun problem-211 (&optional (max 64000000))
   (let ((sieb (make-array (+ max 1) :initial-element 1)))
 	(1+ (loop for i from 2 to max
