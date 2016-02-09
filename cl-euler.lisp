@@ -97,13 +97,15 @@
 
 
 (defun problem-4 ()
-  (loop with max = 0
+  (loop
+	 with max = 0
      for i from 999 downto 100
-     do (loop for j from i downto 100
+     do (loop
+		   for j from i downto 100
            for n = (* i j)
            when (and (> n max) (palindromp n))
            do (setf max n))
-       finally (return max)))
+	 finally (return max)))
 
 
 (defun problem-5 ()
@@ -133,15 +135,18 @@
                 finally (return wert))))
 	(let* ((zahl "7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450")
 		   (zahl-länge (length zahl)))
-      (apply #'max (loop for i from 0 to (- zahl-länge limit)
+      (apply #'max (loop
+					  for i from 0 to (- zahl-länge limit)
                       collect (berechne-produkt i limit zahl))))))
 
 
 (defun problem-9 (&optional (wert 1000))
   (flet ((finde-tripel (wert)
 		   (let ((halb-wert (/ wert 2)))
-             (loop for a from 1 below halb-wert
-                do (loop for b from (1+ a) below halb-wert
+             (loop
+				for a from 1 below halb-wert
+                do (loop
+					  for b from (1+ a) below halb-wert
                       for c = (- wert a b)
                       when (= (+ (expt a 2) (expt b 2)) (expt c 2))
                       do (return-from finde-tripel (* a b c)))))))
@@ -221,7 +226,8 @@
 
 
 (defun problem-12 ()
-  (loop for i upfrom 1
+  (loop
+	 for i upfrom 1
      for n = (dreieckszahl i)
      when (> (length (divisoren n)) 500)
      do (return-from problem-12 n)))
@@ -332,7 +338,8 @@
 
 
 (defun problem-14 (&optional (max (expt 10 6)))
-  (loop with länge = 0
+  (loop
+	 with länge = 0
      with n = ()
      for i from 1 below max
      for c = (collatz-sequenz i)
@@ -353,7 +360,8 @@
 
 
 (defun problem-17 ()
-  (loop for i from 1 to 1000
+  (loop
+	 for i from 1 to 1000
      sum (zähle-buchstaben (format nil "~R" i)) into summe
      finally (return (+ (* 3 9 99) summe))))
 
@@ -381,8 +389,10 @@
 (defun problem-19 ()
   (flet ((sonntagp (tag monat jahr)
 		   (= (wochentag tag monat jahr) 6)))
-    (loop for jahr from 1901 to 2000
-       sum (loop with anzahl = 0
+    (loop
+	   for jahr from 1901 to 2000
+       sum (loop
+			  with anzahl = 0
               for monat from 1 to 12
               when (sonntagp 1 monat jahr)
               do (incf anzahl)
@@ -394,7 +404,8 @@
 
 
 (defun problem-21 (&optional (max 10000))
-  (loop for i from 1 below max
+  (loop
+	 for i from 1 below max
      for bz = (befreundete-zahl-p i)
      when (and bz (/= i bz) (< bz max))
      sum i into summe
@@ -404,7 +415,8 @@
 (defun problem-22 ()
   (let* ((datei (drakma:http-request "https://projecteuler.net/project/resources/p022_names.txt")) 
          (namensliste (erstelle-wortliste datei)))
-    (loop for i from 1 to (length namensliste)
+    (loop
+	   for i from 1 to (length namensliste)
        sum (* i (alphabetischer-wert (pop namensliste))))))
 
 
@@ -436,7 +448,8 @@
 
 
 (defun problem-25 ()
-  (loop for i upfrom 1
+  (loop
+	 for i upfrom 1
      when (= (length (zahl->ziffern (fibonacci i))) 1000)
      return i))
 
@@ -475,8 +488,10 @@
 		  (zahl2 0)
 		  (gezählte-primzahlen 0)
 		  aktuelle-primzahlen)
-      (loop for a from -999 below 0
-         do (loop for b in (sieb-des-eratosthenes 999)
+      (loop
+		 for a from -999 below 0
+         do (loop
+			   for b in (sieb-des-eratosthenes 999)
                when (> (setf aktuelle-primzahlen (primzahl-reihe a b))
                        gezählte-primzahlen)
                do (setf zahl1 a
@@ -486,17 +501,21 @@
 
 
 (defun problem-28 (&optional (max 1000))
-  (1+ (loop with kandidat = 1
+  (1+ (loop
+		 with kandidat = 1
          for i from 2 to max by 2
-         sum (loop for j from 1 to 4
+         sum (loop
+				for j from 1 to 4
                 do (incf kandidat i)
                 sum kandidat))))
 
 
 (defun problem-29 ()
-  (loop with sammlung = ()
+  (loop
+	 with sammlung = ()
      for a from 2 to 100
-     do (loop for b from 2 to 100
+     do (loop
+		   for b from 2 to 100
            do (pushnew (expt a b) sammlung))
      finally (return (length sammlung))))
 
@@ -506,7 +525,8 @@
 			 (if (zerop n)
 				 sum
 				 (expt-ziffern (truncate (/ n 10)) p (+ sum (expt (rem n 10) p))))))
-    (loop for i from 2 to max
+    (loop
+	   for i from 2 to max
        if (= i (expt-ziffern i 5))
        sum i)))
 
@@ -515,17 +535,21 @@
   (let ((münzen '(1 2 5 10 20 50 100 200))
         (wege (make-array 201 :initial-element 0)))
     (incf (aref wege 0))
-    (loop for i in münzen
-       do (loop for j from i to ziel
-               do (incf (aref wege j) (aref wege (- j i)))))
+    (loop
+	   for i in münzen
+       do (loop
+			 for j from i to ziel
+			 do (incf (aref wege j) (aref wege (- j i)))))
     (aref wege ziel)))
 
 
 (defun problem-32 ()
   (flet ((alle-pandigitalen-produkte ()
-           (loop with liste = ()
+           (loop
+			  with liste = ()
               for i from 1 below 100
-              do (loop for j from 100 below 10000
+              do (loop
+					for j from 100 below 10000
                     for produkt = (* i j)
                     if (and (< produkt 9999)
                             (pandigitalp (append (zahl->ziffern i)
@@ -538,21 +562,24 @@
 
 (defun problem-33 ()
   (let (liste)
-    (loop for zähler from 11 to 98
-         do (loop for nenner from (1+ zähler) to 99
-               when (and (not (zerop (mod zähler 10)))
-                         (not (zerop (mod nenner 10)))
-                         (= (mod zähler 10)
-                            (floor nenner 10))
-                         (= (/ (/ (- zähler (mod zähler 10)) 10)
-                               (mod nenner 10))
-                            (/ zähler nenner)))
-               do (push (/ zähler nenner) liste)))
+    (loop
+	   for zähler from 11 to 98
+	   do (loop
+			 for nenner from (1+ zähler) to 99
+			 when (and (not (zerop (mod zähler 10)))
+					   (not (zerop (mod nenner 10)))
+					   (= (mod zähler 10)
+						  (floor nenner 10))
+					   (= (/ (/ (- zähler (mod zähler 10)) 10)
+							 (mod nenner 10))
+						  (/ zähler nenner)))
+			 do (push (/ zähler nenner) liste)))
     (denominator (reduce #'* liste))))
 
 
 (defun problem-34 (&optional (max (* (faktor 9) 7)))
-  (loop for i from 3 to max
+  (loop
+	 for i from 3 to max
      when (= i (reduce #'+ (mapcar #'faktor (zahl->ziffern i))))
 		sum i))
 
