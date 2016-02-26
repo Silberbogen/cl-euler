@@ -406,10 +406,10 @@
 (defun problem-21 (&optional (max 10000))
   (loop
 	 for i from 1 below max
-     for bz = (befreundete-zahl-p i)
-     when (and bz (/= i bz) (< bz max))
-     sum i into summe
-     finally (return summe)))
+	 for bz = (befreundete-zahl-p i)
+	 when (and bz (/= i bz) (< bz max))
+	 sum i into summe
+	 finally (return summe)))
 
 
 (defun problem-22 ()
