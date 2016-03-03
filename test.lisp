@@ -27,7 +27,6 @@
 (defun test (fn wert)
   (format t "~&~A: " fn)
   (let ((ergebnis (funcall fn)))
-    (hr::lösche-alle-memos)
     (if (= wert ergebnis)
         (format t "... bestätigt~%")
         (cerror "~&FEHLER in ~A:  ~A statt ~A~%" fn ergebnis wert))))
@@ -53,7 +52,7 @@
   (test #'problem-18 1074)
   (test #'problem-19 171)
   (test #'problem-20 648)
-;  (test #'problem-21 31626)
+  (test #'problem-21 31626)
   (test #'problem-22 871198282)
   (test #'problem-23 4179871)
   (test #'problem-24 2783915460)
@@ -87,7 +86,16 @@
   (test #'problem-52 142857)
   (test #'problem-53 4075)
   (test #'problem-54 376)
-  (lösche-alle-memos)
+  (lösche-alle-memos '(achteckszahl
+					   dreieckszahl
+					   faktor
+					   fibonacci
+					   fünfeckszahl
+					   nächste-primzahl
+					   nth-permutation
+					   primfaktoren
+					   primzahl
+					   siebeneckszahl))
 ;;  (test #'problem-55 249)
   (test #'problem-56 972)
   (test #'problem-57 153)
@@ -111,7 +119,16 @@
   (test #'problem-75 161667)
   (test #'problem-76 190569291)
   (test #'problem-77 71)
-  (lösche-alle-memos)
+  (lösche-alle-memos '(achteckszahl
+					   dreieckszahl
+					   faktor
+					   fibonacci
+					   fünfeckszahl
+					   nächste-primzahl
+					   nth-permutation
+					   primfaktoren
+					   primzahl
+					   siebeneckszahl))
   
   (test #'problem-79 73162890)
 
@@ -139,6 +156,15 @@
   
   (test #'problem-243 892371480)
   
-  (lösche-alle-memos)
+  (lösche-alle-memos '(achteckszahl
+					   dreieckszahl
+					   faktor
+					   fibonacci
+					   fünfeckszahl
+					   nächste-primzahl
+					   nth-permutation
+					   primfaktoren
+					   primzahl
+					   siebeneckszahl))
   (format t "~&Alle Tests durchgeführt.~%"))
   
