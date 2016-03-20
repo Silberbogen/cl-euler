@@ -71,6 +71,14 @@
 		(push i zahlenliste)
 		(read-char-no-hang stream nil)))))
 
+(defmemo prüfe-zahl (zahl)
+  (cond ((= zahl 1)
+		 1)
+		((= zahl 89)
+		 89)
+		(t
+		 (prüfe-zahl (reduce #'+ (mapcar #'(lambda (x) (expt x 2))
+										 (zahl->ziffern zahl)))))))
 
 ;;; ----------------------------------------
 ;;;  Die Lösungen zu den einzelnen Aufgaben
@@ -1547,21 +1555,13 @@
 
 
 (defun problem-92 (&optional (limit 10000000))
-  (labels ((prüfe-zahl (zahl)
-			 (cond ((= zahl 1)
-					1)
-				   ((= zahl 89)
-					89)
-				   (t
-					(prüfe-zahl (reduce #'+ (mapcar #'(lambda (x) (expt x 2))
-													(zahl->ziffern zahl)))))))
-		   (zähle-quadrat-ziffern-ketten (limit)
-			 (let ((anzahl 0))
-			   (do ((i 1 (1+ i)))
-				   ((> i limit)
-					anzahl)
-				 (when (= 89 (prüfe-zahl i))
-				   (incf anzahl))))))
+  (flet ((zähle-quadrat-ziffern-ketten (limit)
+								(let ((anzahl 0))
+								  (do ((i 1 (1+ i)))
+									  ((> i limit)
+									   anzahl)
+									(when (= 89 (prüfe-zahl i))
+									  (incf anzahl))))))
 	(zähle-quadrat-ziffern-ketten limit)))
 
 
