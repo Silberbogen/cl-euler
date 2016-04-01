@@ -71,6 +71,7 @@
 		(push i zahlenliste)
 		(read-char-no-hang stream nil)))))
 
+
 (defmemo prüfe-zahl (zahl)
   (cond ((= zahl 1)
 		 1)
@@ -79,6 +80,7 @@
 		(t
 		 (prüfe-zahl (reduce #'+ (mapcar #'(lambda (x) (expt x 2))
 										 (zahl->ziffern zahl)))))))
+
 
 ;;; ----------------------------------------
 ;;;  Die Lösungen zu den einzelnen Aufgaben
@@ -1029,30 +1031,24 @@
 					   ((> k 122))
 					 (let ((pd (mögliche-entschlüsselung i j k crypto-text)))
 					   (when pd
-;;						 (format t "~a~%" pd)
 						 (return-from entschlüssle-alles pd)))))))))
 	(entschlüssle-alles)))
 
 
 (defun problem-60 (&optional (max 8400))
-  (labels ((kombiniere (m n)
-			 (parse-integer (format nil "~d~d" m n)))
-		   (kombinierbare-primzahlen-p (m n)
-			 (and (primzahlp (kombiniere m n))
-				  (primzahlp (kombiniere n m))))
-		   (alle-primzahlen-kombinierbar-p (&optional lst)
-			 (labels ( (teste-liste (&optional lst)
-						 (cond ((null lst)
-								nil)
-							   ((null (rest lst))
-								(primzahlp (first lst)))
-							   (t
-								(let ((a (first lst)))
-								  (dolist (b (rest lst) 't)
-									(unless (kombinierbare-primzahlen-p a b)
-									  (return-from teste-liste nil))))))))
-			   (unless (null lst)
-				 (notany #'null (maplist #'teste-liste lst))))))
+  (flet ((alle-primzahlen-kombinierbar-p (&optional lst)
+		   (flet ((teste-liste (&optional lst)
+					(cond ((null lst)
+						   nil)
+						  ((null (rest lst))
+						   (primzahlp (first lst)))
+						  (t
+						   (let ((a (first lst)))
+							 (dolist (b (rest lst) 't)
+							   (unless (kombinierbare-primzahlen-p a b)
+								 (return-from teste-liste nil))))))))
+			 (unless (null lst)
+			   (notany #'null (maplist #'teste-liste lst))))))
 	(let* ((primzahlen (sieb-des-eratosthenes max))
 		   lst
 		   (primzahlen2 (dolist (i primzahlen (sort lst #'<))
