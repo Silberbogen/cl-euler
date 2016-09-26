@@ -52,8 +52,7 @@
   (let ((wortliste nil))
                                         ;	(with-open-file (stream stream-name)
     (with-input-from-string (stream stream-name)
-	  (do ((i (read stream nil)
-			  (read stream nil)))
+	  (do ((i (read stream nil) (read stream nil)))
 		  ((null i)
 		   (sort wortliste #'string<))
 		(push i wortliste)
@@ -64,8 +63,7 @@
   "Einleseformat: ZahlKommaZahlKommaZahl ohne Leerzeichen"
   (let ((zahlenliste nil))
 	(with-input-from-string (stream stream-name)
-	  (do ((i (read stream nil)
-			  (read stream nil)))
+	  (do ((i (read stream nil) (read stream nil)))
 		  ((null i)
 		   (reverse zahlenliste))
 		(push i zahlenliste)
@@ -73,13 +71,10 @@
 
 
 (defmemo prüfe-zahl (zahl)
-  (cond ((= zahl 1)
-		 1)
-		((= zahl 89)
-		 89)
-		(t
-		 (prüfe-zahl (reduce #'+ (mapcar #'(lambda (x) (expt x 2))
-										 (zahl->ziffern zahl)))))))
+  (cond ((= zahl 1) 1)
+		((= zahl 89) 89)
+		(t (prüfe-zahl (reduce #'+ (mapcar #'(lambda (x) (expt x 2))
+										   (zahl->ziffern zahl)))))))
 
 
 ;;; ----------------------------------------
@@ -91,7 +86,7 @@
   (loop
      for i from 1 to 999
      when (or (zerop (mod i 3)) (zerop (mod i 5)))
-     sum i))
+	 sum i))
 
 
 (defun problem-2 ()
