@@ -1714,17 +1714,14 @@
 
 
 (defun problem-104 ()
-  (flet ((pandigitalp (str)
-		   (let ((p (search (sort str #'char<) "123456789")))
-			 (if (and (integerp p) (zerop p)) t nil))))
-	(do ((i 1 (1+ i))
-		 (a 0 b)
-		 (b 1 (+ a b))) ;; die Fibonacci-Zahl
-		(nil)
-	  (when (> i 2749)
-		(when (and (pandigitalp (write-to-string (mod b 1000000000)))
-				   (pandigitalp (subseq (write-to-string b) 0 9)))
-		  (return-from problem-104 i))))))
+  (do ((i 1 (1+ i))
+	   (a 0 b)
+	   (b 1 (+ a b))) ;; die Fibonacci-Zahl
+	  (nil)
+	(when (> i 2749)
+	  (when (and (pandigitalp (mod b 1000000000))
+				 (pandigitalp (subseq (write-to-string b) 0 9)))
+		(return-from problem-104 i)))))
   
   
 (defun problem-125 ()
