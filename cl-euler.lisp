@@ -688,16 +688,17 @@
 
 		
 (defun problem-44 ()
-  (do ((pentagonal 1 (+ pentagonal adder))
-       (adder 4 (+ 3 adder))
-       (addlist nil (cons adder
-						  (mapcar #'(lambda (x) (+ x adder)) addlist)))
-       (plist nil (cons pentagonal plist))
-       (result nil (loop for i in addlist
-					  if (and (member i plist)
-							  (member (- pentagonal (* 2 i)) plist))
-					  return (- pentagonal i i))))
-      (result result)))
+  (loop
+	 for i from 1
+	 for pj = (fünfeckszahl i)
+	 collect pj into liste
+	 do (loop
+		   for pk in liste
+		   for summe = (+ pj pk)
+		   for differenz = (- pj pk)
+		   when (and (fünfeckszahlp summe)
+					 (fünfeckszahlp differenz))
+		   do (return-from  problem-44 differenz))))
 
 
 (defun problem-45 ()
